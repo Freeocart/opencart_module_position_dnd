@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <name>oc3_module_design_position_dnd</name>
+  <code>oc3_module_design_position_dnd</code>
+  <version>1.0.0</version>
+  <author>ikenfin@gmail.com</author>
+  <link>https://ikfi.ru</link>
+
+  <file path="admin/controller/design/layout.php">
+    <operation>
+      <search><![CDATA[protected function getForm() {]]></search>
+      <add position="after"><![CDATA[
+      $this->document->addScript('view/javascript/jquery/jquery-ui/jquery-ui.min.js');
+      ]]></add>
+    </operation>
+  </file>
+
+  <file path="admin/view/template/design/layout_form.twig">
+    <operation>
+      <search><![CDATA[{{ footer }}]]></search>
+      <add position="before"><![CDATA[
+      <script>
+        var recalculatePositions = function (event, ui) {
+          var $el = ui.item;
+          var holder = $el.parents('tbody');
+          console.log($el, holder)
+          holder.find('tr').each(function (iter, item) {
+            var $item = $(item);
+            $item.find('input[name*=\'[sort_order]\']').val($item.index());
+          });
+        }
+
+        $(function () {
+          $('#form-layout table tbody').sortable({
+            stop: recalculatePositions
+          });
+        });
+      </script>
+      ]]></add>
+    </operation>
+  </file>
+</modification>
