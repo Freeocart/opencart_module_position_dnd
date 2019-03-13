@@ -11,6 +11,7 @@
       <search><![CDATA[protected function getForm() {]]></search>
       <add position="after"><![CDATA[
       $this->document->addScript('view/javascript/jquery/jquery-ui/jquery-ui.min.js');
+      $this->document->addStyle('view/javascript/jquery/jquery-ui/jquery-ui.min.css');
       ]]></add>
     </operation>
   </file>
@@ -31,7 +32,8 @@
         }
 
         $(function () {
-          $('#form-layout table tbody').sortable({
+          $('#module-column-left,#module-content-top,#module-content-bottom,#module-column-right').sortable({
+            items: 'tbody tr',
             stop: recalculatePositions
           });
         });
